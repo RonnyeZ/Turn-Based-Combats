@@ -4,6 +4,16 @@ using TMPro;
 using UnityEngine.UI;
 
 
+public enum ActionEffect
+{
+    Damage,
+    Heal,
+    Defense,
+    Buff,
+    Debuff
+}
+
+
 [System.Serializable]
 public class BattleAction
 {
@@ -22,8 +32,17 @@ public class BattleAction
     public int accuracy;
 
 
+    public ActionEffect effectType;
+
+
     [TextArea]
     public string description;
+
+
+    [Header("Dialogue Return")]
+
+    [TextArea]
+    public string battleLogMessage;
 }
 
 
@@ -51,6 +70,8 @@ public class BattleMenuController : MonoBehaviour
     public TMP_Text statusText;
 
     public TMP_Text dialogueText;
+
+    public ScrollRect dialogueScrollRect;
 
 
 
@@ -93,7 +114,55 @@ public class BattleMenuController : MonoBehaviour
 
     void Start()
     {
+
+        dialogueText.text="";
+
+        AddBattleLog
+        (
+            "A batalha começou!"
+        );
+
         ShowPlayerStatus();
+
+    }
+
+
+
+
+    void AddBattleLog
+    (
+        string message
+    )
+    {
+
+        if(dialogueText.text=="")
+        {
+
+            dialogueText.text=
+            message;
+
+        }
+
+        else
+        {
+
+            dialogueText.text +=
+
+            "\n\n"+
+
+            message;
+
+        }
+
+
+
+        Canvas.ForceUpdateCanvases();
+
+
+
+        dialogueScrollRect
+        .verticalNormalizedPosition=0f;
+
     }
 
 
@@ -150,8 +219,12 @@ public class BattleMenuController : MonoBehaviour
 
     public void Run()
     {
-        dialogueText.text=
-        "Tentou fugir!";
+
+        AddBattleLog
+        (
+            "Tentou fugir!"
+        );
+
     }
 
 
@@ -412,53 +485,77 @@ public class BattleMenuController : MonoBehaviour
 
 
 
-        if(currentMenu=="Attack")
+        string finalMessage=
+        action.battleLogMessage;
+
+
+
+        finalMessage=
+
+        finalMessage.Replace
+        (
+            "{value}",
+            effectValue.ToString()
+        );
+
+
+
+        switch(action.effectType)
         {
 
-            enemyHP-=effectValue;
+            case ActionEffect.Damage:
+
+                enemyHP-=effectValue;
 
 
-            if(enemyHP<0)
-            enemyHP=0;
+                if(enemyHP<0)
+                enemyHP=0;
+
+            break;
 
 
 
-            dialogueText.text=
 
-            action.actionName+
 
-            " causou "+
+            case ActionEffect.Heal:
 
-            effectValue+
+                HP+=effectValue;
 
-            " de dano!";
+
+                if(HP>maxHP)
+                HP=maxHP;
+
+            break;
+
+
+
+
+
+            case ActionEffect.Defense:
+
+            break;
+
+
+
+
+
+            case ActionEffect.Buff:
+
+            break;
+
+
+
+
+
+            case ActionEffect.Debuff:
+
+            break;
 
         }
 
 
 
-        else if(currentMenu=="Skill")
-        {
-
-            HP+=effectValue;
-
-
-            if(HP>maxHP)
-            HP=maxHP;
-
-
-
-            dialogueText.text=
-
-            action.actionName+
-
-            " recuperou "+
-
-            effectValue+
-
-            " HP!";
-
-        }
+        AddBattleLog(finalMessage);
 
     }
 
