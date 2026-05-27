@@ -1890,26 +1890,28 @@ MonoBehaviour:
   - actionName: Corte Simples
     type: "F\xEDsico"
     minPower: 1
-    maxPower: 6
+    maxPower: 8
     accuracy: 100
     effectType: 0
     description: Um golpe Simples
     battleLogMessage: Esse ataque causou {value} de dano
   - actionName: Ataque Pesado
     type: "F\xEDsico"
-    minPower: 3
-    maxPower: 8
+    minPower: 4
+    maxPower: 10
     accuracy: 70
     effectType: 0
-    description: "Um golpe forte por\xE9m menos preciso"
+    description: "Em troca de sua precis\xE3o, voc\xEA se concentra em causar o maximo
+      de estrago possivel."
     battleLogMessage: O Ataque Pesado esmagou o oponente, causando {value} de dano
   - actionName: "L\xE2mina Eclipse"
     type: "F\xEDsico"
-    minPower: 4
-    maxPower: 8
+    minPower: 2
+    maxPower: 6
     accuracy: 90
     effectType: 0
-    description: Golpe envolto em energia escura
+    description: "Energias m\xEDsticas rodeiam sobre sua arma, afetando a integridade
+      de seus oponentes. Esse golpe ignorar 2 pontos de redu\xE7\xE3o de dano."
     battleLogMessage: "Uma for\xE7a m\xEDstica abala o oponente, causando {value}
       de dano"
   - actionName: Ataque 04

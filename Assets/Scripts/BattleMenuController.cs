@@ -4,6 +4,27 @@ using TMPro;
 using UnityEngine.UI;
 
 
+
+public enum BattleState
+{
+    Start,
+    PlayerTurn,
+    EnemyTurn,
+    EndTurn,
+    Victory,
+    Defeat
+}
+
+
+
+public enum EffectTiming
+{
+    StartRound,
+    EndRound
+}
+
+
+
 public enum ActionEffect
 {
     Damage,
@@ -14,12 +35,34 @@ public enum ActionEffect
 }
 
 
+
+[System.Serializable]
+public class StatusEffect
+{
+
+    public string effectName;
+
+    [TextArea]
+    public string description;
+
+    public int duration;
+
+    public int power;
+
+    public EffectTiming timing;
+
+}
+
+
+
 [System.Serializable]
 public class BattleAction
 {
+
     public string actionName;
 
     public string type;
+
 
 
     [Header("Power/Damage")]
@@ -29,20 +72,41 @@ public class BattleAction
     public int maxPower;
 
 
+
     public int accuracy;
 
 
+
     public ActionEffect effectType;
+
+
+
+    [Header("Combat")]
+
+    public int priority;
+
+    public bool targetsEnemy=true;
+
+
+
+    [Header("Status Effect")]
+
+    public bool applyEffect;
+
+    public StatusEffect effectData;
+
 
 
     [TextArea]
     public string description;
 
 
+
     [Header("Dialogue Return")]
 
     [TextArea]
     public string battleLogMessage;
+
 }
 
 
@@ -50,7 +114,36 @@ public class BattleAction
 public class BattleMenuController : MonoBehaviour
 {
 
+    #region Battle System
+
+    public BattleState currentState;
+
+
+
+    private BattleAction selectedPlayerAction;
+
+    private BattleAction selectedEnemyAction;
+
+
+
+    private List<StatusEffect>
+    playerEffects=
+    new List<StatusEffect>();
+
+
+
+    private List<StatusEffect>
+    enemyEffects=
+    new List<StatusEffect>();
+
+    #endregion
+
+
+
+
+
     private string currentMenu=null;
+
 
 
     private BattleAction selectedAttack;
@@ -83,8 +176,6 @@ public class BattleMenuController : MonoBehaviour
 
     public int level=7;
 
-    public string condition="Normal";
-
 
 
     [Header("Inimigo")]
@@ -112,19 +203,150 @@ public class BattleMenuController : MonoBehaviour
 
 
 
+
     void Start()
     {
 
+        currentState=
+        BattleState.Start;
+
+
+
         dialogueText.text="";
+
+
+
+        StartBattle();
+
+    }
+
+
+
+
+
+    void StartBattle()
+    {
 
         AddBattleLog
         (
             "A batalha começou!"
         );
 
+
+
+        StartRound();
+
+    }
+
+
+
+
+
+    void StartRound()
+    {
+
+        AddBattleLog
+        (
+            "Uma nova rodada começou!"
+        );
+
+
+
+        ProcessEffects
+        (
+            playerEffects,
+            true,
+            EffectTiming.StartRound
+        );
+
+
+
+        ProcessEffects
+        (
+            enemyEffects,
+            false,
+            EffectTiming.StartRound
+        );
+
+
+
+        currentState=
+        BattleState.PlayerTurn;
+
+
+
         ShowPlayerStatus();
 
     }
+
+
+
+
+
+    void EndRound()
+    {
+
+        ProcessEffects
+        (
+            playerEffects,
+            true,
+            EffectTiming.EndRound
+        );
+
+
+
+        ProcessEffects
+        (
+            enemyEffects,
+            false,
+            EffectTiming.EndRound
+        );
+
+
+
+        ReduceEffectDuration
+        (
+            playerEffects
+        );
+
+
+
+        ReduceEffectDuration
+        (
+            enemyEffects
+        );
+
+
+
+        RemoveExpiredEffects
+        (
+            playerEffects
+        );
+
+
+
+        RemoveExpiredEffects
+        (
+            enemyEffects
+        );
+
+
+
+        CheckBattleState();
+
+
+
+        if(currentState!=BattleState.Victory
+        &&
+        currentState!=BattleState.Defeat)
+        {
+
+            StartRound();
+
+        }
+
+    }
+
 
 
 
@@ -168,8 +390,42 @@ public class BattleMenuController : MonoBehaviour
 
 
 
+
     void ShowPlayerStatus()
     {
+
+        string conditionText=
+        "";
+
+
+
+        foreach(StatusEffect effect
+                in playerEffects)
+        {
+
+            conditionText +=
+
+            effect.effectName+
+
+            " ("+
+
+            effect.duration+
+
+            ")\n";
+
+        }
+
+
+
+        if(conditionText=="")
+        {
+
+            conditionText=
+            "Nenhuma";
+
+        }
+
+
 
         statusText.text=
 
@@ -177,9 +433,12 @@ public class BattleMenuController : MonoBehaviour
 
         "\nNível: "+level+
 
-        "\nCondição: "+condition;
+        "\n\nCondições:\n"+
+
+        conditionText;
 
     }
+
 
 
 
@@ -230,6 +489,7 @@ public class BattleMenuController : MonoBehaviour
 
 
 
+
     void ToggleMenu
     (
         string menuName,
@@ -258,6 +518,7 @@ public class BattleMenuController : MonoBehaviour
         RestoreSelection();
 
     }
+
 
 
 
@@ -318,6 +579,7 @@ public class BattleMenuController : MonoBehaviour
 
 
 
+
     void SelectAction
     (
         BattleAction action
@@ -332,7 +594,25 @@ public class BattleMenuController : MonoBehaviour
         if(selected==action)
         {
 
-            ExecuteAction(action);
+            selectedPlayerAction=
+            action;
+
+
+
+            AddBattleLog
+            (
+                "Você escolheu "
+                +action.actionName
+            );
+
+
+
+            currentState=
+            BattleState.EnemyTurn;
+
+
+
+            EnemyChooseAction();
 
             return;
 
@@ -346,6 +626,7 @@ public class BattleMenuController : MonoBehaviour
         ShowActionInfo(action);
 
     }
+
 
 
 
@@ -460,6 +741,91 @@ public class BattleMenuController : MonoBehaviour
 
 
 
+
+    void EnemyChooseAction()
+    {
+
+        selectedEnemyAction=
+
+        attacks
+        [
+            Random.Range
+            (
+                0,
+                attacks.Count
+            )
+        ];
+
+
+
+        AddBattleLog
+        (
+            "O inimigo escolheu uma ação!"
+        );
+
+
+
+        currentState=
+        BattleState.EndTurn;
+
+
+
+        ExecuteTurn();
+
+    }
+
+
+
+
+
+    void ExecuteTurn()
+    {
+
+        List<BattleAction> turnActions=
+        new List<BattleAction>();
+
+
+
+        turnActions.Add
+        (
+            selectedPlayerAction
+        );
+
+
+
+        turnActions.Add
+        (
+            selectedEnemyAction
+        );
+
+
+
+        turnActions.Sort
+        (
+            (a,b)=>
+            b.priority.CompareTo(a.priority)
+        );
+
+
+
+        foreach(BattleAction action
+                in turnActions)
+        {
+
+            ExecuteAction(action);
+
+        }
+
+
+
+        EndRound();
+
+    }
+
+
+
+
+
     void ExecuteAction
     (
         BattleAction action
@@ -505,11 +871,27 @@ public class BattleMenuController : MonoBehaviour
 
             case ActionEffect.Damage:
 
-                enemyHP-=effectValue;
+                if(action.targetsEnemy)
+                {
+
+                    enemyHP-=effectValue;
 
 
-                if(enemyHP<0)
-                enemyHP=0;
+                    if(enemyHP<0)
+                    enemyHP=0;
+
+                }
+
+                else
+                {
+
+                    HP-=effectValue;
+
+
+                    if(HP<0)
+                    HP=0;
+
+                }
 
             break;
 
@@ -527,29 +909,54 @@ public class BattleMenuController : MonoBehaviour
 
             break;
 
+        }
 
 
 
+        if(action.applyEffect)
+        {
 
-            case ActionEffect.Defense:
-
-            break;
-
-
-
-
-
-            case ActionEffect.Buff:
-
-            break;
+            StatusEffect newEffect=
+            new StatusEffect();
 
 
 
+            newEffect.effectName=
+            action.effectData.effectName;
+
+            newEffect.description=
+            action.effectData.description;
+
+            newEffect.duration=
+            action.effectData.duration;
+
+            newEffect.power=
+            action.effectData.power;
+
+            newEffect.timing=
+            action.effectData.timing;
 
 
-            case ActionEffect.Debuff:
 
-            break;
+            if(action.targetsEnemy)
+            {
+
+                enemyEffects.Add
+                (
+                    newEffect
+                );
+
+            }
+
+            else
+            {
+
+                playerEffects.Add
+                (
+                    newEffect
+                );
+
+            }
 
         }
 
@@ -558,6 +965,145 @@ public class BattleMenuController : MonoBehaviour
         AddBattleLog(finalMessage);
 
     }
+
+
+
+
+
+    void ProcessEffects
+    (
+        List<StatusEffect> effects,
+        bool isPlayer,
+        EffectTiming timing
+    )
+    {
+
+        foreach(StatusEffect effect
+                in effects)
+        {
+
+            if(effect.timing!=timing)
+            continue;
+
+
+
+            switch(effect.effectName)
+            {
+
+                case "Poison":
+
+                    if(isPlayer)
+                    {
+
+                        HP-=effect.power;
+
+                        AddBattleLog
+                        (
+                            "O jogador sofreu "
+                            +effect.power+
+                            " de dano venenoso!"
+                        );
+
+                    }
+
+                    else
+                    {
+
+                        enemyHP-=effect.power;
+
+                        AddBattleLog
+                        (
+                            "O inimigo sofreu "
+                            +effect.power+
+                            " de dano venenoso!"
+                        );
+
+                    }
+
+                break;
+
+            }
+
+        }
+
+    }
+
+
+
+
+
+    void ReduceEffectDuration
+    (
+        List<StatusEffect> effects
+    )
+    {
+
+        foreach(StatusEffect effect
+                in effects)
+        {
+
+            effect.duration--;
+
+        }
+
+    }
+
+
+
+
+
+    void RemoveExpiredEffects
+    (
+        List<StatusEffect> effects
+    )
+    {
+
+        effects.RemoveAll
+        (
+            effect => effect.duration<=0
+        );
+
+    }
+
+
+
+
+
+    void CheckBattleState()
+    {
+
+        if(enemyHP<=0)
+        {
+
+            currentState=
+            BattleState.Victory;
+
+            AddBattleLog
+            (
+                "Vitória!"
+            );
+
+            return;
+
+        }
+
+
+
+        if(HP<=0)
+        {
+
+            currentState=
+            BattleState.Defeat;
+
+            AddBattleLog
+            (
+                "Derrota!"
+            );
+
+        }
+
+    }
+
 
 
 
@@ -589,6 +1135,7 @@ public class BattleMenuController : MonoBehaviour
 
 
 
+
     BattleAction GetCurrentSelection()
     {
 
@@ -607,6 +1154,7 @@ public class BattleMenuController : MonoBehaviour
         return null;
 
     }
+
 
 
 
@@ -655,6 +1203,7 @@ public class BattleMenuController : MonoBehaviour
 
 
 
+
     void RestoreSelection()
     {
 
@@ -671,6 +1220,7 @@ public class BattleMenuController : MonoBehaviour
         }
 
     }
+
 
 
 
