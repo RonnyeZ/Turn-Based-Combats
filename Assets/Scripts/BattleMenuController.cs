@@ -160,11 +160,31 @@ public class BattleMenuController : MonoBehaviour
 
     public GameObject optionButtonPrefab;
 
-    public TMP_Text statusText;
-
     public TMP_Text dialogueText;
 
     public ScrollRect dialogueScrollRect;
+
+
+
+    [Header("Player Status Scroll")]
+
+    public GameObject playerStatusScroll;
+
+    public TMP_Text playerLevelText;
+
+    public TMP_Text playerConditionText;
+
+    public TMP_Text playerHPText;
+
+    public Slider playerHPBar;
+
+
+
+    [Header("Action Status Scroll")]
+
+    public GameObject actionStatusScroll;
+
+    public TMP_Text actionStatusText;
 
 
 
@@ -175,6 +195,8 @@ public class BattleMenuController : MonoBehaviour
     public TMP_Text enemyLevelText;
 
     public TMP_Text enemyHPText;
+    
+    public TMP_Text enemyHPValueText;
 
     public TMP_Text enemyConditionText;
 
@@ -270,13 +292,6 @@ public class BattleMenuController : MonoBehaviour
 
     void StartRound()
     {
-
-        AddBattleLog
-        (
-            "Uma nova rodada começou!"
-        );
-
-
 
         ProcessEffects
         (
@@ -451,6 +466,14 @@ public class BattleMenuController : MonoBehaviour
         enemyConditionText.text=
         conditions;
 
+        if(enemyHPValueText != null)
+        {
+            enemyHPValueText.text =
+            enemyHP +
+            "/" +
+            enemyMaxHP;
+        }
+
     }
 
 
@@ -476,7 +499,7 @@ public class BattleMenuController : MonoBehaviour
 
             dialogueText.text +=
 
-            "\n\n"+
+            "\n" +
 
             message;
 
@@ -504,6 +527,16 @@ public class BattleMenuController : MonoBehaviour
 
     void ShowPlayerStatus()
     {
+
+        if(playerStatusScroll!=null)
+        playerStatusScroll.SetActive(true);
+
+
+
+        if(actionStatusScroll!=null)
+        actionStatusScroll.SetActive(false);
+
+
 
         string conditionText=
         "";
@@ -538,15 +571,52 @@ public class BattleMenuController : MonoBehaviour
 
 
 
-        statusText.text=
+        if(playerHPText!=null)
+        {
 
-        "HP: "+HP+
+            playerHPText.text=
 
-        "\nNível: "+level+
+            HP+
 
-        "\n\nCondições:\n"+
+            "/"+
 
-        conditionText;
+            maxHP;
+
+        }
+
+
+
+        if(playerHPBar!=null)
+        {
+
+            playerHPBar.value=
+
+            (float)HP/
+
+            maxHP;
+
+        }
+
+
+
+        if(playerLevelText!=null)
+        {
+
+            playerLevelText.text=
+
+            "Lv."+level;
+
+        }
+
+
+
+        if(playerConditionText!=null)
+        {
+
+            playerConditionText.text=
+            conditionText;
+
+        }
 
     }
 
@@ -748,6 +818,16 @@ public class BattleMenuController : MonoBehaviour
     )
     {
 
+        if(playerStatusScroll!=null)
+        playerStatusScroll.SetActive(false);
+
+
+
+        if(actionStatusScroll!=null)
+        actionStatusScroll.SetActive(true);
+
+
+
         string info="";
 
 
@@ -845,7 +925,14 @@ public class BattleMenuController : MonoBehaviour
         }
 
 
-        statusText.text=info;
+
+        if(actionStatusText!=null)
+        {
+
+            actionStatusText.text=
+            info;
+
+        }
 
     }
 
@@ -920,11 +1007,16 @@ public class BattleMenuController : MonoBehaviour
 
 
         foreach(BattleAction action
-                in turnActions)
+        in turnActions)
         {
+            bool isPlayerAction =
+            action == selectedPlayerAction;
 
-            ExecuteAction(action);
-
+            ExecuteAction
+            (
+                action,
+                isPlayerAction
+            );
         }
 
 
@@ -939,36 +1031,26 @@ public class BattleMenuController : MonoBehaviour
 
     void ExecuteAction
     (
-        BattleAction action
+        BattleAction action,
+        bool isPlayerAction
     )
     {
+        int effectValue = 0;
 
-        int effectValue=0;
-
-
-
-        if(action.maxPower>0)
+        if(action.maxPower > 0)
         {
-
-            effectValue=
-
+            effectValue =
             Random.Range
             (
                 action.minPower,
-                action.maxPower+1
+                action.maxPower + 1
             );
-
         }
 
-
-
-        string finalMessage=
+        string finalMessage =
         action.battleLogMessage;
 
-
-
-        finalMessage=
-
+        finalMessage =
         finalMessage.Replace
         (
             "{value}",
@@ -982,26 +1064,20 @@ public class BattleMenuController : MonoBehaviour
 
             case ActionEffect.Damage:
 
-                if(action.targetsEnemy)
+                if(isPlayerAction)
                 {
+                    enemyHP -= effectValue;
 
-                    enemyHP-=effectValue;
-
-
-                    if(enemyHP<0)
-                    enemyHP=0;
-
+                    if(enemyHP < 0)
+                    enemyHP = 0;
                 }
 
                 else
                 {
+                    HP -= effectValue;
 
-                    HP-=effectValue;
-
-
-                    if(HP<0)
-                    HP=0;
-
+                    if(HP < 0)
+                    HP = 0;
                 }
 
             break;
@@ -1012,11 +1088,21 @@ public class BattleMenuController : MonoBehaviour
 
             case ActionEffect.Heal:
 
-                HP+=effectValue;
+                if(isPlayerAction)
+                {
+                    HP += effectValue;
 
+                    if(HP > maxHP)
+                    HP = maxHP;
+                }
 
-                if(HP>maxHP)
-                HP=maxHP;
+                else
+                {
+                    enemyHP += effectValue;
+
+                    if(enemyHP > enemyMaxHP)
+                    enemyHP = enemyMaxHP;
+                }
 
             break;
 
@@ -1024,63 +1110,11 @@ public class BattleMenuController : MonoBehaviour
 
 
 
-        if(action.applyEffect)
-        {
-
-            StatusEffect newEffect=
-            new StatusEffect();
-
-
-
-            newEffect.effectName=
-            action.effectData.effectName;
-
-            newEffect.description=
-            action.effectData.description;
-
-            newEffect.duration=
-            action.effectData.duration;
-
-            newEffect.power=
-            action.effectData.power;
-
-            newEffect.timing=
-            action.effectData.timing;
-
-
-
-            if(action.targetsEnemy)
-            {
-
-                enemyEffects.Add
-                (
-                    newEffect
-                );
-
-            }
-
-            else
-            {
-
-                playerEffects.Add
-                (
-                    newEffect
-                );
-
-            }
-
-        }
-
-
-
         AddBattleLog(finalMessage);
-
-
 
         ShowPlayerStatus();
 
         UpdateEnemyHUD();
-
     }
 
 
