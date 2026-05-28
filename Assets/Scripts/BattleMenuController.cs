@@ -168,6 +168,20 @@ public class BattleMenuController : MonoBehaviour
 
 
 
+    [Header("Enemy HUD")]
+
+    public TMP_Text enemyNameText;
+
+    public TMP_Text enemyLevelText;
+
+    public TMP_Text enemyHPText;
+
+    public TMP_Text enemyConditionText;
+
+    public Slider enemyHPBar;
+
+
+
     [Header("Jogador")]
 
     public int HP=100;
@@ -175,6 +189,14 @@ public class BattleMenuController : MonoBehaviour
     public int maxHP=100;
 
     public int level=7;
+
+
+
+    [Header("Enemy Data")]
+
+    public string enemyName="Goblin";
+
+    public int enemyLevel=3;
 
 
 
@@ -234,6 +256,10 @@ public class BattleMenuController : MonoBehaviour
 
 
 
+        UpdateEnemyHUD();
+
+
+
         StartRound();
 
     }
@@ -276,6 +302,8 @@ public class BattleMenuController : MonoBehaviour
 
 
         ShowPlayerStatus();
+
+        UpdateEnemyHUD();
 
     }
 
@@ -351,6 +379,84 @@ public class BattleMenuController : MonoBehaviour
 
 
 
+    void UpdateEnemyHUD()
+    {
+
+        if(enemyNameText!=null)
+        enemyNameText.text=
+        enemyName;
+
+
+
+        if(enemyLevelText!=null)
+        enemyLevelText.text=
+        "Lv."+enemyLevel;
+
+
+
+        if(enemyHPText!=null)
+        enemyHPText.text=
+
+        enemyHP+
+
+        "/"+
+
+        enemyMaxHP;
+
+
+
+        if(enemyHPBar!=null)
+        enemyHPBar.value=
+
+        (float)enemyHP/
+
+        enemyMaxHP;
+
+
+
+        string conditions=
+        "";
+
+
+
+        foreach(StatusEffect effect
+                in enemyEffects)
+        {
+
+            conditions +=
+
+            effect.effectName+
+
+            " ("+
+
+            effect.duration+
+
+            ")\n";
+
+        }
+
+
+
+        if(conditions=="")
+        {
+
+            conditions=
+            "Nenhuma";
+
+        }
+
+
+
+        if(enemyConditionText!=null)
+        enemyConditionText.text=
+        conditions;
+
+    }
+
+
+
+
+
     void AddBattleLog
     (
         string message
@@ -382,8 +488,13 @@ public class BattleMenuController : MonoBehaviour
 
 
 
-        dialogueScrollRect
-        .verticalNormalizedPosition=0f;
+        if(dialogueScrollRect!=null)
+        {
+
+            dialogueScrollRect
+            .verticalNormalizedPosition=0f;
+
+        }
 
     }
 
@@ -963,6 +1074,12 @@ public class BattleMenuController : MonoBehaviour
 
 
         AddBattleLog(finalMessage);
+
+
+
+        ShowPlayerStatus();
+
+        UpdateEnemyHUD();
 
     }
 
