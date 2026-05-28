@@ -36,9 +36,9 @@ public enum ActionEffect
 
 
 
-[System.Serializable]
-public class StatusEffect
-{
+    [System.Serializable]
+    public class StatusEffect
+    {
 
     public string effectName;
 
@@ -51,13 +51,13 @@ public class StatusEffect
 
     public EffectTiming timing;
 
-}
+    }
 
 
 
-[System.Serializable]
-public class BattleAction
-{
+    [System.Serializable]
+    public class BattleAction
+    {
 
     public string actionName;
 
@@ -228,6 +228,7 @@ public class BattleMenuController : MonoBehaviour
 
     public int enemyMaxHP=50;
 
+
     [Header("Enemy AI")]
 
     public int enemyLowHPThreshold = 15;
@@ -245,6 +246,15 @@ public class BattleMenuController : MonoBehaviour
     [Header("Ações do Inimigo")]
 
     public List<BattleAction> enemyActions;
+
+
+    [Header("Player Pattern Memory")]
+
+    public int playerDamageActionsUsed;
+    public int playerHealActionsUsed;
+    public int playerDefenseActionsUsed;
+    public int playerBuffActionsUsed;
+    public int playerDebuffActionsUsed;
 
 
 
@@ -783,6 +793,7 @@ public class BattleMenuController : MonoBehaviour
             selectedPlayerAction=
             action;
 
+            RegisterPlayerAction(action);
 
 
             AddBattleLog
@@ -1466,5 +1477,34 @@ public class BattleMenuController : MonoBehaviour
         return reduction;
     }
     
+
+    void RegisterPlayerAction
+    (
+        BattleAction action
+    )
+    {
+        switch(action.effectType)
+        {
+            case ActionEffect.Damage:
+                playerDamageActionsUsed++;
+            break;
+
+            case ActionEffect.Heal:
+                playerHealActionsUsed++;
+            break;
+
+            case ActionEffect.Defense:
+                playerDefenseActionsUsed++;
+            break;
+
+            case ActionEffect.Buff:
+                playerBuffActionsUsed++;
+            break;
+
+            case ActionEffect.Debuff:
+                playerDebuffActionsUsed++;
+            break;
+        }
+    }
 
 }
