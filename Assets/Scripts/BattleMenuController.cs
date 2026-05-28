@@ -228,15 +228,23 @@ public class BattleMenuController : MonoBehaviour
 
     public int enemyMaxHP=50;
 
+    [Header("Enemy AI")]
+
+    public int enemyLowHPThreshold = 15;
 
 
-    [Header("Ações")]
+    [Header("Ações do Jogador")]
 
     public List<BattleAction> attacks;
 
     public List<BattleAction> skills;
 
     public List<BattleAction> items;
+
+
+    [Header("Ações do Inimigo")]
+
+    public List<BattleAction> enemyActions;
 
 
 
@@ -563,10 +571,7 @@ public class BattleMenuController : MonoBehaviour
 
         if(conditionText=="")
         {
-
-            conditionText=
-            "Nenhuma";
-
+            conditionText="";
         }
 
 
@@ -942,34 +947,47 @@ public class BattleMenuController : MonoBehaviour
 
     void EnemyChooseAction()
     {
+        if(enemyActions.Count <= 0)
+        {
+            AddBattleLog("O inimigo não possui ações!");
+            return;
+        }
 
-        selectedEnemyAction=
+        List<BattleAction> possibleActions =
+        new List<BattleAction>();
 
-        attacks
+        if(enemyHP <= enemyLowHPThreshold)
+        {
+            foreach(BattleAction action in enemyActions)
+            {
+                if(action.effectType == ActionEffect.Heal)
+                {
+                    possibleActions.Add(action);
+                }
+            }
+        }
+
+        if(possibleActions.Count == 0)
+        {
+            possibleActions = enemyActions;
+        }
+
+        selectedEnemyAction =
+        possibleActions
         [
             Random.Range
             (
                 0,
-                attacks.Count
+                possibleActions.Count
             )
         ];
 
+        AddBattleLog("O inimigo escolheu uma ação!");
 
-
-        AddBattleLog
-        (
-            "O inimigo escolheu uma ação!"
-        );
-
-
-
-        currentState=
+        currentState =
         BattleState.EndTurn;
 
-
-
         ExecuteTurn();
-
     }
 
 
@@ -1047,6 +1065,17 @@ public class BattleMenuController : MonoBehaviour
             );
         }
 
+        if(action.accuracy > 0)
+        {
+            int roll = Random.Range(1, 101);
+
+            if(roll > action.accuracy)
+            {
+                AddBattleLog(action.actionName + " errou!");
+                return;
+            }
+        }
+
         string finalMessage =
         action.battleLogMessage;
 
@@ -1066,25 +1095,49 @@ public class BattleMenuController : MonoBehaviour
 
                 if(isPlayerAction)
                 {
-                    enemyHP -= effectValue;
+                    int reduction =
+                    GetDefenseReduction
+                    (
+                        enemyEffects
+                    );
+
+                    int finalDamage =
+                    effectValue - reduction;
+
+                    if(finalDamage < 0)
+                    finalDamage = 0;
+
+                    enemyHP -= finalDamage;
 
                     if(enemyHP < 0)
                     enemyHP = 0;
+
+                    effectValue = finalDamage;
                 }
 
                 else
                 {
-                    HP -= effectValue;
+                    int reduction =
+                    GetDefenseReduction
+                    (
+                        playerEffects
+                    );
+
+                    int finalDamage =
+                    effectValue - reduction;
+
+                    if(finalDamage < 0)
+                    finalDamage = 0;
+
+                    HP -= finalDamage;
 
                     if(HP < 0)
                     HP = 0;
+
+                    effectValue = finalDamage;
                 }
 
             break;
-
-
-
-
 
             case ActionEffect.Heal:
 
@@ -1397,5 +1450,21 @@ public class BattleMenuController : MonoBehaviour
         }
 
     }
+
+    int GetDefenseReduction(List<StatusEffect> effects)
+    {
+        int reduction = 0;
+
+        foreach(StatusEffect effect in effects)
+        {
+            if(effect.effectName == "Defense")
+            {
+                reduction += effect.power;
+            }
+        }
+
+        return reduction;
+    }
+    
 
 }
