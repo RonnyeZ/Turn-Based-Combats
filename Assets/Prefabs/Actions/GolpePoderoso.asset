@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcbba34b6d1e26645be1bd51ee8946f0, type: 3}
+  m_Name: GolpePoderoso
+  m_EditorClassIdentifier: 
+  actionName: Golpe Poderoso
+  type: Ataque
+  minPower: 2
+  maxPower: 12
+  accuracy: 80
+  effectType: 0
+  targetType: 1
+  priority: 4
+  applyEffect: 0
+  effectData: {fileID: 0}
+  description: "Em troca da sua precis\xE3o, voc\xEA realizar um poderoso ataque
+    pesado causando um dano estonteante."
+  battleLogMessage: Um estrondo atingi seu oponente, causando {value} de dano

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcbba34b6d1e26645be1bd51ee8946f0, type: 3}
+  m_Name: GolpeSimples
+  m_EditorClassIdentifier: 
+  actionName: Golpe de Espada
+  type: 
+  minPower: 1
+  maxPower: 6
+  accuracy: 100
+  effectType: 0
+  targetType: 1
+  priority: 4
+  applyEffect: 0
+  effectData: {fileID: 0}
+  description: "Um golpe com a espada, utilizando de uma t\xE9cnica simples, nada
+    muito impressionante."
+  battleLogMessage: "Sua l\xE2mina brande causando {value} de dano"

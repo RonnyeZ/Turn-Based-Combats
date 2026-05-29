@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcbba34b6d1e26645be1bd51ee8946f0, type: 3}
+  m_Name: AtaquePesado
+  m_EditorClassIdentifier: 
+  actionName: Ataque Pesado
+  type: Ataque
+  minPower: 2
+  maxPower: 4
+  accuracy: 90
+  effectType: 0
+  targetType: 1
+  priority: 2
+  applyEffect: 1
+  effectData: {fileID: 11400000, guid: 21d0a6c3c46288a4abd3707512dea472, type: 2}
+  description: "Voc\xEA realizar um ataque pesado a qual desequilibra a postura do
+    oponente. Reduz a Accuracy do proximo ataque do oponente."
+  battleLogMessage: Sua pancada estonteante causa {value} de dano
