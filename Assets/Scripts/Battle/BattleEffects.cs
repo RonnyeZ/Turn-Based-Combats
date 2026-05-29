@@ -1,62 +1,97 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BattleEffects : MonoBehaviour
 {
-    public int GetDefenseReduction(List<StatusEffectInstance> effects)
+    public int GetDefenseBonus(BattleUnit unit)
     {
-        int reduction = 0;
+        int bonus = 0;
 
-        foreach(StatusEffectInstance effect in effects)
+        foreach(StatusEffectInstance effect in unit.effects)
         {
-            if(effect.data.effectName == "Defense")
-            {
-                reduction += effect.data.power;
-            }
+            bonus += effect.data.defenseBonus;
         }
 
-        return reduction;
+        return bonus;
+    }
+
+    public int GetAccuracyBonus(BattleUnit unit)
+    {
+        int bonus = 0;
+
+        foreach(StatusEffectInstance effect in unit.effects)
+        {
+            bonus += effect.data.accuracyBonus;
+        }
+
+        return bonus;
+    }
+
+    public int GetPriorityBonus(BattleUnit unit)
+    {
+        int bonus = 0;
+
+        foreach(StatusEffectInstance effect in unit.effects)
+        {
+            bonus += effect.data.priorityBonus;
+        }
+
+        return bonus;
+    }
+
+    public void ProcessEffects
+    (
+        BattleUnit unit,
+        EffectTiming timing,
+        BattleUIController ui
+    )
+    {
+        foreach(StatusEffectInstance effect in unit.effects)
+        {
+            if(effect.data.timing != timing)
+                continue;
+
+            if(effect.data.hpDamage > 0)
+            {
+                unit.HP -= effect.data.hpDamage;
+
+                if(unit.HP < 0)
+                    unit.HP = 0;
+
+                ui.AddBattleLog
+                (
+                    unit.unitName +
+                    " sofreu " +
+                    effect.data.hpDamage +
+                    " de dano por " +
+                    effect.data.effectName +
+                    "!"
+                );
+            }
+
+            if(effect.data.hpRecover > 0)
+            {
+                unit.HP += effect.data.hpRecover;
+
+                if(unit.HP > unit.maxHP)
+                    unit.HP = unit.maxHP;
+
+                ui.AddBattleLog
+                (
+                    unit.unitName +
+                    " recuperou " +
+                    effect.data.hpRecover +
+                    " HP!"
+                );
+            }
+        }
     }
 
     public void ApplyEffect(BattleUnit target, StatusEffectData effectData)
     {
         if(effectData == null)
-        return;
+            return;
 
-        target.effects.Add
-        (
-            new StatusEffectInstance(effectData)
-        );
-    }
-
-    public void ProcessEffects
-    (
-        BattleUnit target,
-        EffectTiming timing,
-        BattleUIController ui
-    )
-    {
-        foreach(StatusEffectInstance effect in target.effects)
-        {
-            if(effect.data.timing != timing)
-            continue;
-
-            if(effect.data.effectName == "Poison")
-            {
-                target.HP -= effect.data.power;
-
-                if(target.HP < 0)
-                target.HP = 0;
-
-                ui.AddBattleLog
-                (
-                    target.unitName +
-                    " sofreu " +
-                    effect.data.power +
-                    " de dano venenoso!"
-                );
-            }
-        }
+        target.effects.Add(new StatusEffectInstance(effectData));
     }
 
     public void ReduceDurations(BattleUnit unit)

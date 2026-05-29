@@ -11,6 +11,10 @@ public class BattleActionData : ScriptableObject
     public int minPower;
     public int maxPower;
 
+    [Header("PP")]
+    public bool usePP;
+    public int maxPP;
+
     [Header("Accuracy")]
     public int accuracy;
 

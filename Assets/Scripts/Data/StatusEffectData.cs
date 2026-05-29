@@ -10,7 +10,15 @@ public class StatusEffectData : ScriptableObject
 
     public int duration;
 
-    public int power;
-
     public EffectTiming timing;
+
+    [Header("Round Effects")]
+    public int hpDamage;
+    public int hpRecover;
+    public int ppRecover;
+
+    [Header("Stat Modifiers")]
+    public int defenseBonus;
+    public int accuracyBonus;
+    public int priorityBonus;
 }

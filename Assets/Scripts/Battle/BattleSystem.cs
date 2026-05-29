@@ -230,8 +230,8 @@ public class BattleSystem : MonoBehaviour
             case ActionEffect.Damage:
 
                 int reduction =
-                battleEffects.GetDefenseReduction(target.effects);
-
+                battleEffects.GetDefenseBonus(target);
+                
                 int finalDamage =
                 effectValue - reduction;
 

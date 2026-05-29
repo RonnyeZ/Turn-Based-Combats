@@ -85,9 +85,13 @@ public class BattleMenuController : MonoBehaviour
             GameObject newButton =
             Instantiate(optionButtonPrefab, contentArea);
 
-            newButton
-            .GetComponentInChildren<TMP_Text>()
-            .text = action.actionName;
+            string buttonLabel = action.actionName;
+            if(action.usePP)
+            {
+                buttonLabel += "  " + action.maxPP + "/" + action.maxPP;
+            }
+            newButton.GetComponentInChildren<TMP_Text>().text = buttonLabel;
+
 
             Button button =
             newButton.GetComponent<Button>();
