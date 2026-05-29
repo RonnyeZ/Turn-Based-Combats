@@ -10,8 +10,12 @@ public enum BattleState
 
 public enum EffectTiming
 {
+    Immediate,
     StartRound,
-    EndRound
+    PlayerTurn,
+    EnemyTurn,
+    EndRound,
+    OnDamageTaken
 }
 
 public enum ActionEffect

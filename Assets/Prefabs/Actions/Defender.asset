@@ -10,19 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fcbba34b6d1e26645be1bd51ee8946f0, type: 3}
-  m_Name: TonicoMenor
+  m_Name: Defender
   m_EditorClassIdentifier: 
-  actionName: "T\xF4nico Revigorante"
-  type: "Consum\xEDvel"
+  actionName: Defender
+  type: Habilidade
   minPower: 1
-  maxPower: 1
+  maxPower: 5
   usePP: 0
   maxPP: 0
-  accuracy: 0
-  effectType: 3
+  accuracy: 100
+  effectType: 2
   targetType: 0
   priority: 6
-  applyEffect: 0
-  effectData: {fileID: 0}
-  description: "T\xF4nico capaz de revigorar o PP de um ataque."
-  battleLogMessage: "Voc\xEA recuperou {value} PP"
+  applyEffect: 1
+  effectData: {fileID: 11400000, guid: 26750c41d83d750488dbdb65c8931bbc, type: 2}
+  description: "Voc\xEA ergue suas defesas, bloqueando parte do dano atual, al\xE9m
+    de receber Resist\xEAncia"
+  battleLogMessage: "Voc\xEA reduziu {value} do dano"

@@ -339,7 +339,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 904415154}
         m_TargetAssemblyTypeName: BattleMenuController, Assembly-CSharp
         m_MethodName: OpenSkills
         m_Mode: 1
@@ -472,7 +472,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 904415154}
         m_TargetAssemblyTypeName: BattleMenuController, Assembly-CSharp
         m_MethodName: OpenAttacks
         m_Mode: 1
@@ -756,10 +756,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1249545083}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 222.5, y: -16.76}
-  m_SizeDelta: {x: 445, y: 33.52}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &111236250
 MonoBehaviour:
@@ -1112,10 +1112,10 @@ RectTransform:
   - {fileID: 2088115132}
   m_Father: {fileID: 1974830652}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 222.5, y: -120}
-  m_SizeDelta: {x: 445, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &212549919
 MonoBehaviour:
@@ -1585,11 +1585,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 430a9e3c8494a364a84316115c412800, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleUI: {fileID: 0}
-  battleEffects: {fileID: 0}
-  enemyAI: {fileID: 0}
-  player: {fileID: 0}
-  enemy: {fileID: 0}
+  battleUI: {fileID: 1850336977}
+  battleEffects: {fileID: 2028908315}
+  enemyAI: {fileID: 1999559144}
+  player: {fileID: 440904190}
+  enemy: {fileID: 1861659236}
   currentState: 0
   playerDamageActionsUsed: 0
   playerHealActionsUsed: 0
@@ -1715,7 +1715,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 904415154}
         m_TargetAssemblyTypeName: BattleMenuController, Assembly-CSharp
         m_MethodName: OpenItems
         m_Mode: 1
@@ -1872,10 +1872,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1974830652}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 222.5, y: -155.11}
-  m_SizeDelta: {x: 445, y: 40.22}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &401985239
 MonoBehaviour:
@@ -2273,6 +2273,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 440176014}
   m_CullTransparentMesh: 1
+--- !u!1 &440904189
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 440904191}
+  - component: {fileID: 440904190}
+  m_Layer: 0
+  m_Name: PlayerUnit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &440904190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440904189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a175f932daf2a049b163d798099dd48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitName: Cavaleiro
+  level: 9
+  HP: 42
+  maxHP: 42
+  attacks:
+  - {fileID: 11400000, guid: 290a9398024627d4d95eaefe5b57df14, type: 2}
+  - {fileID: 11400000, guid: 2c96fc72481d6a64bbc0d85c6ec7f6b1, type: 2}
+  - {fileID: 11400000, guid: 114359dfff37ffd4f9a07656a8166e1f, type: 2}
+  - {fileID: 11400000, guid: 49360c4a389edb94eb43e02a37bb9fde, type: 2}
+  - {fileID: 11400000, guid: 19172fe5aa599dc4f960f91964892d10, type: 2}
+  skills:
+  - {fileID: 11400000, guid: 811430d6cfe0ba649b7bf91b5a3a511e, type: 2}
+  - {fileID: 11400000, guid: 4725e5d700a54da4789b05bd4affeccd, type: 2}
+  items:
+  - {fileID: 11400000, guid: 0941eda811365564b99a0fee9a44dc99, type: 2}
+  - {fileID: 11400000, guid: e2f8794d8aa638440b036095629632b4, type: 2}
+  enemyActions: []
+--- !u!4 &440904191
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440904189}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.5, y: -1, z: -2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &478507467
 GameObject:
   m_ObjectHideFlags: 0
@@ -3266,10 +3327,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2076751623}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 676, y: -36.760002}
-  m_SizeDelta: {x: 1322, y: 33.52}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &899665350
 MonoBehaviour:
@@ -3412,10 +3473,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 165d6e6f8cb2adb44b1101d6278ce572, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleSystem: {fileID: 0}
-  battleUI: {fileID: 0}
-  contentArea: {fileID: 0}
-  optionButtonPrefab: {fileID: 0}
+  battleSystem: {fileID: 256684661}
+  battleUI: {fileID: 1850336977}
+  contentArea: {fileID: 1123546322}
+  optionButtonPrefab: {fileID: 6217681357091175430, guid: a33dfcca8e9163f4a817c4c343e16ec3,
+    type: 3}
 --- !u!1 &1052898720
 GameObject:
   m_ObjectHideFlags: 0
@@ -5674,7 +5736,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 904415154}
         m_TargetAssemblyTypeName: BattleMenuController, Assembly-CSharp
         m_MethodName: Run
         m_Mode: 1
@@ -6291,21 +6353,73 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65760ff9b765a0b45bfc984feb2b5fc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueText: {fileID: 0}
-  dialogueScrollRect: {fileID: 0}
-  playerStatusScroll: {fileID: 0}
-  playerLevelText: {fileID: 0}
-  playerConditionText: {fileID: 0}
-  playerHPText: {fileID: 0}
-  playerHPBar: {fileID: 0}
-  actionStatusScroll: {fileID: 0}
-  actionStatusText: {fileID: 0}
-  enemyNameText: {fileID: 0}
-  enemyLevelText: {fileID: 0}
-  enemyHPText: {fileID: 0}
-  enemyHPValueText: {fileID: 0}
-  enemyConditionText: {fileID: 0}
-  enemyHPBar: {fileID: 0}
+  dialogueText: {fileID: 899665350}
+  dialogueScrollRect: {fileID: 1889381686}
+  playerStatusScroll: {fileID: 499145036}
+  playerLevelText: {fileID: 1909692666}
+  playerConditionText: {fileID: 401985239}
+  playerHPText: {fileID: 6100458}
+  playerHPBar: {fileID: 408444279}
+  actionStatusScroll: {fileID: 1732762844}
+  actionStatusText: {fileID: 111236251}
+  enemyNameText: {fileID: 876672672}
+  enemyLevelText: {fileID: 2116338058}
+  enemyHPText: {fileID: 253273814}
+  enemyConditionText: {fileID: 1760285172}
+  enemyHPBar: {fileID: 104264312}
+--- !u!1 &1861659235
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1861659237}
+  - component: {fileID: 1861659236}
+  m_Layer: 0
+  m_Name: EnemyUnit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1861659236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861659235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a175f932daf2a049b163d798099dd48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitName: Esqueleto
+  level: 11
+  HP: 100
+  maxHP: 100
+  attacks: []
+  skills: []
+  items: []
+  enemyActions:
+  - {fileID: 11400000, guid: 290a9398024627d4d95eaefe5b57df14, type: 2}
+--- !u!4 &1861659237
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861659235}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5, y: 3, z: -2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1889381684
 GameObject:
   m_ObjectHideFlags: 0
@@ -7677,3 +7791,5 @@ SceneRoots:
   - {fileID: 1768130471}
   - {fileID: 1056627740}
   - {fileID: 1524221037}
+  - {fileID: 440904191}
+  - {fileID: 1861659237}

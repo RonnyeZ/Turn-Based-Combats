@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec2f5d78b009fe54c99d9567fc62e3ad, type: 3}
-  m_Name: Atordoado
+  m_Name: Veneno
   m_EditorClassIdentifier: 
-  effectName: Atordoado
-  description: Alguem atordoado recebe uma penalidade em seu Accuracy
-  duration: 1
-  timing: 4
-  hpDamage: 0
+  effectName: Veneno
+  description: "Voc\xEA recebe 2 pontos de dano todo inicio de"
+  duration: 3
+  timing: 1
+  hpDamage: 2
   hpRecover: 0
   ppRecover: 0
-  defenseBonus: 0
-  accuracyBonus: -20
+  defenseBonus: 3
+  accuracyBonus: 0
   priorityBonus: 0
