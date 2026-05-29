@@ -22,7 +22,7 @@ MonoBehaviour:
   effectType: 0
   targetType: 0
   priority: 0
-  applyEffect: 0
+  applyEffect: 1
   effectData: {fileID: 0}
   description: 
   battleLogMessage: 
