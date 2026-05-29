@@ -756,10 +756,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1249545083}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 222.5, y: -16.76}
+  m_SizeDelta: {x: 445, y: 33.52}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &111236250
 MonoBehaviour:
@@ -1112,10 +1112,10 @@ RectTransform:
   - {fileID: 2088115132}
   m_Father: {fileID: 1974830652}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 222.5, y: -120}
+  m_SizeDelta: {x: 445, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &212549919
 MonoBehaviour:
@@ -1872,10 +1872,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1974830652}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 222.5, y: -155.11}
+  m_SizeDelta: {x: 445, y: 40.22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &401985239
 MonoBehaviour:
@@ -3327,10 +3327,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2076751623}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 676, y: -36.760002}
+  m_SizeDelta: {x: 1322, y: 33.52}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &899665350
 MonoBehaviour:
@@ -3752,7 +3752,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1230503642}
   - component: {fileID: 1230503644}
-  - component: {fileID: 1230503643}
   m_Layer: 0
   m_Name: Inimigo
   m_TagString: Untagged
@@ -3775,18 +3774,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1768130471}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1230503643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1230503641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8c24ef157fe34d41a560de2cd75f55a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &1230503644
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5966,7 +5953,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1782059068}
   - component: {fileID: 1782059070}
-  - component: {fileID: 1782059069}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -5989,18 +5975,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1768130471}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1782059069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1782059067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8c24ef157fe34d41a560de2cd75f55a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &1782059070
 SpriteRenderer:
   m_ObjectHideFlags: 0
