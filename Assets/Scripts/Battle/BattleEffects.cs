@@ -57,7 +57,7 @@ public class BattleEffects : MonoBehaviour
                 if(unit.HP < 0)
                     unit.HP = 0;
 
-                ui.AddBattleLog
+                ui.QueueBattleLog
                 (
                     unit.unitName +
                     " sofreu " +
@@ -75,7 +75,7 @@ public class BattleEffects : MonoBehaviour
                 if(unit.HP > unit.maxHP)
                     unit.HP = unit.maxHP;
 
-                ui.AddBattleLog
+                ui.QueueBattleLog
                 (
                     unit.unitName +
                     " recuperou " +

@@ -15,6 +15,9 @@ public class BattleActionData : ScriptableObject
     public bool usePP;
     public int maxPP;
 
+    [Header("Turn Cost")]
+    public bool consumesTurn = true;
+
     [Header("Accuracy")]
     public int accuracy;
 

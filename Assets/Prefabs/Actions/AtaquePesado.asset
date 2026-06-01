@@ -16,6 +16,9 @@ MonoBehaviour:
   type: Ataque
   minPower: 2
   maxPower: 4
+  usePP: 0
+  maxPP: 0
+  consumesTurn: 1
   accuracy: 90
   effectType: 0
   targetType: 1

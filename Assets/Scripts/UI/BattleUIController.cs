@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +10,16 @@ public class BattleUIController : MonoBehaviour
     public TMP_Text dialogueText;
     public ScrollRect dialogueScrollRect;
 
+    [Header("Dialogue Timing")]
+    public float messageDelay = 1.1f;
+
+    private Queue<string> dialogueQueue =
+    new Queue<string>();
+
+    private bool isShowingMessage;
+
+
+
     [Header("Player Status Scroll")]
     public GameObject playerStatusScroll;
     public TMP_Text playerLevelText;
@@ -15,9 +27,13 @@ public class BattleUIController : MonoBehaviour
     public TMP_Text playerHPText;
     public Slider playerHPBar;
 
+
+
     [Header("Action Status Scroll")]
     public GameObject actionStatusScroll;
     public TMP_Text actionStatusText;
+
+
 
     [Header("Enemy HUD")]
     public TMP_Text enemyNameText;
@@ -26,7 +42,40 @@ public class BattleUIController : MonoBehaviour
     public TMP_Text enemyConditionText;
     public Slider enemyHPBar;
 
-    public void AddBattleLog(string message)
+
+
+    public void QueueBattleLog(string message)
+    {
+        dialogueQueue.Enqueue(message);
+
+        if(!isShowingMessage)
+        {
+            StartCoroutine(ShowDialogueQueue());
+        }
+    }
+
+
+
+    IEnumerator ShowDialogueQueue()
+    {
+        isShowingMessage = true;
+
+        while(dialogueQueue.Count > 0)
+        {
+            string message =
+            dialogueQueue.Dequeue();
+
+            AddBattleLogInstant(message);
+
+            yield return new WaitForSeconds(messageDelay);
+        }
+
+        isShowingMessage = false;
+    }
+
+
+
+    void AddBattleLogInstant(string message)
     {
         if(dialogueText.text == "")
         {
@@ -44,6 +93,17 @@ public class BattleUIController : MonoBehaviour
             dialogueScrollRect.verticalNormalizedPosition = 0f;
         }
     }
+
+
+
+    public void ClearDialogue()
+    {
+        dialogueText.text = "";
+        dialogueQueue.Clear();
+        isShowingMessage = false;
+    }
+
+
 
     public void ShowPlayerStatus(BattleUnit player)
     {
@@ -77,6 +137,8 @@ public class BattleUIController : MonoBehaviour
             playerConditionText.text = conditionText;
     }
 
+
+
     public void ShowActionInfo(BattleActionData action, string currentMenu)
     {
         if(playerStatusScroll != null)
@@ -94,7 +156,10 @@ public class BattleUIController : MonoBehaviour
 
         if(action.minPower > 0 || action.maxPower > 0)
         {
-            string label = currentMenu == "Attack" ? "Damage" : "Power";
+            string label =
+            currentMenu == "Attack"
+            ? "Damage"
+            : "Power";
 
             string value =
             action.minPower == action.maxPower
@@ -117,6 +182,8 @@ public class BattleUIController : MonoBehaviour
         if(actionStatusText != null)
             actionStatusText.text = info;
     }
+
+
 
     public void UpdateEnemyHUD(BattleUnit enemy)
     {

@@ -52,7 +52,7 @@ public class BattleMenuController : MonoBehaviour
 
     public void Run()
     {
-        battleUI.AddBattleLog("Tentou fugir!");
+        battleUI.QueueBattleLog("Tentou fugir!");
     }
 
     void ToggleMenu

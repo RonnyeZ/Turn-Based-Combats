@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class BattleSystem : MonoBehaviour
 {
@@ -25,6 +26,13 @@ public class BattleSystem : MonoBehaviour
     public int playerBuffActionsUsed;
     public int playerDebuffActionsUsed;
 
+    [Header("Battle Timing")]
+    public float messageDelay = 1.0f;
+    public float actionDelay = 1.2f;
+    public float roundEndDelay = 0.8f;
+
+    private bool isResolvingTurn;
+
     void Start()
     {
         currentState = BattleState.Start;
@@ -37,7 +45,7 @@ public class BattleSystem : MonoBehaviour
 
     void StartBattle()
     {
-        battleUI.AddBattleLog("A batalha começou!");
+        battleUI.QueueBattleLog("A batalha começou!");
 
         battleUI.UpdateEnemyHUD(enemy);
 
@@ -105,10 +113,27 @@ public class BattleSystem : MonoBehaviour
 
         RegisterPlayerAction(action);
 
-        battleUI.AddBattleLog
-        (
-            "Você escolheu " + action.actionName
-        );
+
+        if(action.consumesTurn == false)
+        {
+            ExecuteAction
+            (
+                new BattleActionExecution
+                (
+                    action,
+                    player,
+                    GetTarget(player, enemy, action),
+                    true
+                )
+            );
+
+            battleUI.ShowPlayerStatus(player);
+            battleUI.UpdateEnemyHUD(enemy);
+
+            currentState = BattleState.PlayerTurn;
+
+            return;
+        }
 
         currentState = BattleState.EnemyTurn;
 
@@ -122,19 +147,22 @@ public class BattleSystem : MonoBehaviour
 
         if(selectedEnemyAction == null)
         {
-            battleUI.AddBattleLog("O inimigo não possui ações!");
+            battleUI.QueueBattleLog("O inimigo não possui ações!");
             return;
         }
 
-        battleUI.AddBattleLog("O inimigo escolheu uma ação!");
-
         currentState = BattleState.EndTurn;
 
-        ExecuteTurn();
+        StartCoroutine(ExecuteTurnRoutine());
     }
 
-    void ExecuteTurn()
+    IEnumerator ExecuteTurnRoutine()
     {
+        if(isResolvingTurn)
+        yield break;
+
+        isResolvingTurn = true;
+
         List<BattleActionExecution> turnActions =
         new List<BattleActionExecution>();
 
@@ -162,16 +190,53 @@ public class BattleSystem : MonoBehaviour
 
         turnActions.Sort
         (
-            (a, b) =>
+            (a,b) =>
             b.action.priority.CompareTo(a.action.priority)
         );
 
         foreach(BattleActionExecution execution in turnActions)
         {
+            if(execution.isPlayerAction)
+            {
+                battleUI.QueueBattleLog
+                (
+                    "Você usou " +
+                    execution.action.actionName +
+                    "!"
+                );
+            }
+            else
+            {
+                battleUI.QueueBattleLog
+                (
+                    enemy.unitName +
+                    " usou " +
+                    execution.action.actionName +
+                    "!"
+                );
+            }
+
+            yield return new WaitForSeconds(messageDelay);
+
             ExecuteAction(execution);
+
+            yield return new WaitForSeconds(actionDelay);
+
+            CheckBattleState();
+
+            if(currentState == BattleState.Victory ||
+            currentState == BattleState.Defeat)
+            {
+                isResolvingTurn = false;
+                yield break;
+            }
         }
 
+        yield return new WaitForSeconds(roundEndDelay);
+
         EndRound();
+
+        isResolvingTurn = false;
     }
 
     BattleUnit GetTarget
@@ -213,7 +278,7 @@ public class BattleSystem : MonoBehaviour
 
             if(roll > action.accuracy)
             {
-                battleUI.AddBattleLog(action.actionName + " errou!");
+                battleUI.QueueBattleLog(action.actionName + " errou!");
                 return;
             }
         }
@@ -271,7 +336,7 @@ public class BattleSystem : MonoBehaviour
             );
         }
 
-        battleUI.AddBattleLog(finalMessage);
+        battleUI.QueueBattleLog(finalMessage);
 
         battleUI.ShowPlayerStatus(player);
         battleUI.UpdateEnemyHUD(enemy);
@@ -282,14 +347,14 @@ public class BattleSystem : MonoBehaviour
         if(enemy.IsDead())
         {
             currentState = BattleState.Victory;
-            battleUI.AddBattleLog("Vitória!");
+            battleUI.QueueBattleLog("Vitória!");
             return;
         }
 
         if(player.IsDead())
         {
             currentState = BattleState.Defeat;
-            battleUI.AddBattleLog("Derrota!");
+            battleUI.QueueBattleLog("Derrota!");
         }
     }
 

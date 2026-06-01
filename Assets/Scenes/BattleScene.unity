@@ -1596,6 +1596,9 @@ MonoBehaviour:
   playerDefenseActionsUsed: 0
   playerBuffActionsUsed: 0
   playerDebuffActionsUsed: 0
+  messageDelay: 1
+  actionDelay: 1.2
+  roundEndDelay: 0.8
 --- !u!1 &269765230
 GameObject:
   m_ObjectHideFlags: 0
@@ -2311,6 +2314,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2c96fc72481d6a64bbc0d85c6ec7f6b1, type: 2}
   - {fileID: 11400000, guid: 114359dfff37ffd4f9a07656a8166e1f, type: 2}
   - {fileID: 11400000, guid: 49360c4a389edb94eb43e02a37bb9fde, type: 2}
+  - {fileID: 11400000, guid: 19172fe5aa599dc4f960f91964892d10, type: 2}
+  - {fileID: 11400000, guid: 19172fe5aa599dc4f960f91964892d10, type: 2}
+  - {fileID: 11400000, guid: 19172fe5aa599dc4f960f91964892d10, type: 2}
   - {fileID: 11400000, guid: 19172fe5aa599dc4f960f91964892d10, type: 2}
   skills:
   - {fileID: 11400000, guid: 811430d6cfe0ba649b7bf91b5a3a511e, type: 2}
@@ -3379,8 +3385,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 26
+  m_fontSizeBase: 26
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3393,7 +3399,7 @@ MonoBehaviour:
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
-  m_paragraphSpacing: 40
+  m_paragraphSpacing: 45
   m_charWidthMaxAdj: 0
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
@@ -3768,8 +3774,8 @@ Transform:
   m_GameObject: {fileID: 1230503641}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.3, y: 2, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalScale: {x: 0.18, y: 0.18, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1310819524}
@@ -4266,8 +4272,8 @@ Transform:
   m_GameObject: {fileID: 1310819522}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6, y: -1, z: 0.10446739}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 4.8, y: -2.45, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1230503642}
@@ -4351,8 +4357,8 @@ Transform:
   m_GameObject: {fileID: 1317046892}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.5, y: -5, z: 0.10446739}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -4, y: -5.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1782059068}
@@ -5968,8 +5974,8 @@ Transform:
   m_GameObject: {fileID: 1782059067}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.628, y: 1.864, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0}
+  m_LocalPosition: {x: 0.5, y: 1.8, z: 0}
+  m_LocalScale: {x: 0.21, y: 0.21, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1317046894}
@@ -6327,6 +6333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueText: {fileID: 899665350}
   dialogueScrollRect: {fileID: 1889381686}
+  messageDelay: 1.2
   playerStatusScroll: {fileID: 499145036}
   playerLevelText: {fileID: 1909692666}
   playerConditionText: {fileID: 401985239}
@@ -7457,8 +7464,8 @@ MonoBehaviour:
   m_Padding:
     m_Left: 15
     m_Right: 15
-    m_Top: 20
-    m_Bottom: 20
+    m_Top: 10
+    m_Bottom: 5
   m_ChildAlignment: 0
   m_Spacing: 0
   m_ChildForceExpandWidth: 1

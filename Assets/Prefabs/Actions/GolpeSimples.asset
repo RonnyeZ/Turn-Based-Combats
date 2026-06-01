@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: GolpeSimples
   m_EditorClassIdentifier: 
   actionName: Golpe de Espada
-  type: 
+  type: Fisico
   minPower: 1
   maxPower: 6
+  usePP: 0
+  maxPP: 0
+  consumesTurn: 1
   accuracy: 100
   effectType: 0
   targetType: 1

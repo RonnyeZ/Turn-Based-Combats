@@ -20,6 +20,7 @@ public enum EffectTiming
 
 public enum ActionEffect
 {
+    None,
     Damage,
     Heal,
     Defense,
@@ -31,4 +32,21 @@ public enum TargetType
 {
     Self,
     Enemy
+}
+
+public enum ActionCategory
+{
+    Attack,
+    Skill,
+    Item,
+    Defense,
+    Escape,
+    Utility
+}
+
+public enum ResourceType
+{
+    None,
+    PP,
+    Uses
 }

@@ -9,16 +9,3 @@ public class StatusEffectInstance
         currentDuration = effectData.duration;
     }
 }
-
-public class BattleActionInstance
-{
-    public BattleActionData data;
-
-    public int currentPP;
-
-    public BattleActionInstance(BattleActionData actionData)
-    {
-        data = actionData;
-        currentPP = actionData.maxPP;
-    }
-}
